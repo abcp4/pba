@@ -289,6 +289,7 @@ class DataSet(object):
 
     def load_test(self, hparams):
         """Load random data and labels."""
+        print("load!!!!")
         test_size = 200
         self.num_classes = 200
         self.train_images = np.random.random((hparams.train_size, 3, 224, 224)) * 255
