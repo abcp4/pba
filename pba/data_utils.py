@@ -315,7 +315,13 @@ class DataSet(object):
             labels.append(l)
           return cv_img,labels
 
-
+        def fix(data):
+            data = np.asarray(data)
+            import torch
+            data = torch.from_numpy(data)
+            data = data.permute(0, 3, 1, 2)
+            return data
+        
         cv_img = []
         labels = []
         y_test = []
@@ -336,12 +342,13 @@ class DataSet(object):
         x_test,y_test = load('test','ugly',2,x_test,y_test)
 
         import numpy as np
-        x_test = np.asarray(x_test)
+        x_test = fix(x_test)
         y_test = np.asarray(y_test)
-        x_train = np.asarray(x_train)
+        x_train = fix(x_train)
         y_train = np.asarray(y_train)
-        x_valid = np.asarray(x_valid)
+        x_valid = fix(x_valid)
         y_valid = np.asarray(y_valid)
+        
 
         
         self.train_images = x_train
