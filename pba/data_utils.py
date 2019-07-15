@@ -317,14 +317,14 @@ class DataSet(object):
             train_labels+=trn_y
             val_labels+=val_y
             test_labels+=tes_y
-                
+        
         self.train_images = np.asarray(train_data)
         self.val_images = np.asarray(val_data)
         self.test_images = np.asarray(test_data)
         self.train_labels = np.asarray(train_labels)
         self.val_labels = np.asarray(val_labels)
         self.test_labels = np.asarray(test_labels)
-        
+        print("data shape: ",self.train_images.shape)
         
     def load_data(self, hparams):
         """Load raw data from specified dataset.
