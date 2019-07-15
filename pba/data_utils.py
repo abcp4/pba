@@ -343,6 +343,7 @@ class DataSet(object):
         x_test,y_test = load('test','ugly',2,x_test,y_test)
 
         import numpy as np
+        print('lol!!!')
         x_test = fix(x_test)
         y_test = np.asarray(y_test)
         x_train = fix(x_train)
