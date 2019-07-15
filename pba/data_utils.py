@@ -288,7 +288,6 @@ class DataSet(object):
         self.num_classes = num_classes
 
     def load_test(self, hparams):
-        from torch.autograd import Variable
         """Load random data and labels."""
         """ 
         test_size = 200
@@ -301,30 +300,54 @@ class DataSet(object):
         self.test_labels = np.random.randint(0, self.num_classes, (test_size))
         """
         self.num_classes = 3
-        dset_cls= torchvision.datasets.ImageFolder 
-        train_loader = dset_cls(root='/content/data/train')
-        valid_loader = dset_cls(root='/content/data/valid')
-        test_loader = dset_cls(root='/content/data/test')
-        train_data = []
-        val_data = []
-        test_data = []
-        train_labels = []
-        val_labels = []
-        test_labels = []
-        for step, ((trn_X, trn_y), (val_X, val_y),(tes_X, tes_y)) in enumerate(zip(train_loader, valid_loader,test_loader)):
-            train_data+=Variable(trn_X)
-            val_data+=Variable(val_X)
-            test_data+=Variable(tes_X)
-            train_labels+=Variable(trn_y)
-            val_labels+=Variable(val_y)
-            test_labels+=Variable(tes_y)
+        import glob
+        import cv2
+
+        def load(ttype,label,l,cv_img,labels):
+          for img in glob.glob('data/'+ttype+'/'+label+'/*.jpg'):
+            n= cv2.imread(img)
+            width = 64
+            height = 64
+            dim = (width, height)
+            # resize image
+            n = cv2.resize(n, dim, interpolation = cv2.INTER_AREA) 
+            cv_img.append(n)
+            labels.append(l)
+          return cv_img,labels
+
+
+        cv_img = []
+        labels = []
+        y_test = []
+        y_train = []
+        x_train = []
+        x_test = []
+
+        x_train,y_train = load('train','good',0,x_train,y_train)
+        x_train,y_train = load('train','bad',1,x_train,y_train)
+        x_train,y_train = load('train','ugly',2,x_train,y_train)
+        x_valid,y_valid = load('valid','good',0,x_valid,y_valid)
+        x_valid,y_valid = load('valid','bad',1,x_valid,y_valid)
+        x_valid,y_valid = load('valid','ugly',2,x_valid,y_valid)
+        x_test,y_test = load('test','good',0,x_test,y_test)
+        x_test,y_test = load('test','bad',1,x_test,y_test)
+        x_test,y_test = load('test','ugly',2,x_test,y_test)
+
+        import numpy as np
+        x_test = np.asarray(x_test)
+        y_test = np.asarray(y_test)
+        x_train = np.asarray(x_train)
+        y_train = np.asarray(y_train)
+        x_valid = np.asarray(x_valid)
+        y_valid = np.asarray(y_valid)
+
         
-        self.train_images = np.asarray(train_data)
-        self.val_images = np.asarray(val_data)
-        self.test_images = np.asarray(test_data)
-        self.train_labels = np.asarray(train_labels)
-        self.val_labels = np.asarray(val_labels)
-        self.test_labels = np.asarray(test_labels)
+        self.train_images = x_train
+        self.val_images = x_valid
+        self.test_images = x_test
+        self.train_labels = y_train
+        self.val_labels = y_valid
+        self.test_labels = y_test
         print("data shape: ",self.train_images.shape)
         
     def load_data(self, hparams):
