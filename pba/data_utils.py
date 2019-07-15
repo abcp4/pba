@@ -317,6 +317,7 @@ class DataSet(object):
 
         def fix(data):
             data = np.asarray(data)
+            print('shape:',data.shape)
             import torch
             data = torch.from_numpy(data)
             data = data.permute(0, 3, 1, 2)
