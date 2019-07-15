@@ -289,8 +289,7 @@ class DataSet(object):
 
     def load_test(self, hparams):
         """Load random data and labels."""
-        print("load!!!!")
-        a=2/0
+        """ 
         test_size = 200
         self.num_classes = 200
         self.train_images = np.random.random((hparams.train_size, 3, 224, 224)) * 255
@@ -299,7 +298,20 @@ class DataSet(object):
         self.train_labels = np.random.randint(0, self.num_classes, (hparams.train_size))
         self.val_labels = np.random.randint(0, self.num_classes, (hparams.validation_size))
         self.test_labels = np.random.randint(0, self.num_classes, (test_size))
+        """
+        self.num_classes = 3
+        dset_cls= torchvision.datasets.ImageFolder 
+        train_loader = dset_cls(root='/content/data/train')
+        valid_loader = dset_cls(root='/content/data/valid')
+        test_loader = dset_cls(root='/content/data/test')
 
+        self.train_images = train_loader.data
+        self.val_images = valid_loader.data
+        self.test_images = test_loader.data
+        self.train_labels = train_loader.labels
+        self.val_labels = valid_loader.labels
+        self.test_labels = test_loader.labels
+        
     def load_data(self, hparams):
         """Load raw data from specified dataset.
 
