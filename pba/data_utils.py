@@ -321,6 +321,8 @@ class DataSet(object):
         y_test = []
         y_train = []
         x_train = []
+        y_valid = []
+        x_valid = []
         x_test = []
 
         x_train,y_train = load('train','good',0,x_train,y_train)
