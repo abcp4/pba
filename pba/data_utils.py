@@ -304,13 +304,27 @@ class DataSet(object):
         train_loader = dset_cls(root='/content/data/train')
         valid_loader = dset_cls(root='/content/data/valid')
         test_loader = dset_cls(root='/content/data/test')
-
-        self.train_images = train_loader.data
-        self.val_images = valid_loader.data
-        self.test_images = test_loader.data
-        self.train_labels = train_loader.labels
-        self.val_labels = valid_loader.labels
-        self.test_labels = test_loader.labels
+        train_data = []
+        val_data = []
+        test_data = []
+        train_labels = []
+        val_labels = []
+        test_labels = []
+        for step, ((trn_X, trn_y), (val_X, val_y),(tes_X, tes_y)) in enumerate(zip(train_loader, valid_loader,test_loader)):
+            train_data+=trn_X
+            val_data+=val_X
+            test_data+=tes_X
+            train_labels+=trn_y
+            val_labels+=val_y
+            test_labels+=tes_y
+                
+        self.train_images = np.asarray(train_data)
+        self.val_images = np.asarray(val_data)
+        self.test_images = np.asarray(test_data)
+        self.train_labels = np.asarray(train_labels)
+        self.val_labels = np.asarray(val_labels)
+        self.test_labels = np.asarray(test_labels)
+        
         
     def load_data(self, hparams):
         """Load raw data from specified dataset.
