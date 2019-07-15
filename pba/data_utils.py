@@ -288,6 +288,7 @@ class DataSet(object):
         self.num_classes = num_classes
 
     def load_test(self, hparams):
+        from torch.autograd import Variable
         """Load random data and labels."""
         """ 
         test_size = 200
@@ -311,12 +312,12 @@ class DataSet(object):
         val_labels = []
         test_labels = []
         for step, ((trn_X, trn_y), (val_X, val_y),(tes_X, tes_y)) in enumerate(zip(train_loader, valid_loader,test_loader)):
-            train_data+=trn_X
-            val_data+=val_X
-            test_data+=tes_X
-            train_labels+=trn_y
-            val_labels+=val_y
-            test_labels+=tes_y
+            train_data+=Variable(trn_X)
+            val_data+=Variable(val_X)
+            test_data+=Variable(tes_X)
+            train_labels+=Variable(trn_y)
+            val_labels+=Variable(val_y)
+            test_labels+=Variable(tes_y)
         
         self.train_images = np.asarray(train_data)
         self.val_images = np.asarray(val_data)
