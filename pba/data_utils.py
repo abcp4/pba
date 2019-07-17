@@ -353,9 +353,9 @@ class DataSet(object):
         
 
         
-        self.train_images = x_train
-        self.val_images = x_valid
-        self.test_images = x_test
+        self.train_images = x_train.data.numpy()
+        self.val_images = x_valid.data.numpy()
+        self.test_images = x_test.data.numpy()
         self.train_labels = y_train
         self.val_labels = y_valid
         self.test_labels = y_test
