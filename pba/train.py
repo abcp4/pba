@@ -38,15 +38,15 @@ class RayModel(Trainable):
     def _save(self, checkpoint_dir):
         """Uses tf trainer object to checkpoint."""
         #save_name = self.trainer.save_model(checkpoint_dir, self._iteration)
-        save_name = self.trainer.save_model('/content/pba/results/', self._iteration)
+        save_name = self.trainer.save_model('/content/pba/results/models/', self._iteration)
         tf.logging.info("saved model {}".format(save_name))
         os.close(os.open(save_name, os.O_CREAT))
         return save_name
 
     def _restore(self, checkpoint):
         """Restores model from checkpoint."""
-        #tf.logging.info("RESTORING: {}".format(checkpoint))
-        tf.logging.info("RESTORING: {}".format('/content/pba/results/'))
+        tf.logging.info("RESTORING: {}".format(checkpoint))
+        #tf.logging.info("RESTORING: {}".format('/content/pba/results/'))
         self.trainer.extract_model_spec(checkpoint)
 
     def reset_config(self, new_config):
