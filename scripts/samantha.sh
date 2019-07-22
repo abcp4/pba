@@ -11,5 +11,5 @@ python pba/search.py \
     --name "test_search" --gpu 0.19 --cpu 2 \
     --num_samples 16 --perturbation_interval 3 --epochs 160 \
     --explore cifar10 --aug_policy cifar10 \
-    --lr 0.1 --wd 0.005 
+    --lr 0.1 --wd 0.005 --bs 32 --test_bs 32 --recompute_dset_stats
 
