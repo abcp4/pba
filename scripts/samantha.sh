@@ -3,7 +3,7 @@ export PYTHONPATH="$(pwd)"
 
 python pba/search.py \
     --local_dir "$PWD/results/" \
-    --model_name wrn_40_4 \
+    --model_name wrn_40_2 \
     --dataset test \
     --data_path ~/geo/data/ \
     --train_size 1000 --val_size 1322 \
