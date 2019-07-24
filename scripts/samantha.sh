@@ -9,7 +9,7 @@ python pba/search.py \
     --train_size 1000 --val_size 1322 \
     --checkpoint_freq 5 \
     --name "test_search" --gpu 0.15 --cpu 2 \
-    --num_samples 16 --perturbation_interval 3 --epochs 260 \
+    --num_samples 16 --perturbation_interval 3 --epochs 200 \
     --explore cifar10 --aug_policy cifar10 \
     --lr 0.1 --wd 0.0005 --bs 16 --test_bs 16 --recompute_dset_stats
 
