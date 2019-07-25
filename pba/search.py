@@ -73,7 +73,7 @@ def main(_):
         config["hp_policy"] = new_params
         return config
 
-    ray.init()
+    ray.init(object_store_memory = 2e+10)
 
     pbt = PopulationBasedTraining(
         time_attr="training_iteration",
