@@ -73,8 +73,8 @@ def main(_):
         config["hp_policy"] = new_params
         return config
 
-    ray.init(object_store_memory = 2106127360, redis_max_memory = 2106127360)
-
+    #ray.init(object_store_memory = 2106127360, redis_max_memory = 2106127360)
+    ray.init()
     pbt = PopulationBasedTraining(
         time_attr="training_iteration",
         reward_attr="val_acc",
