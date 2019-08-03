@@ -81,7 +81,7 @@ def main(_):
         perturbation_interval=FLAGS.perturbation_interval,
         custom_explore_fn=explore,
         log_config=True)
-
+    
     run_experiments(
         {
             FLAGS.name: train_spec
@@ -89,7 +89,7 @@ def main(_):
         scheduler=pbt,
         reuse_actors=True,
         verbose=True)
-
+    
 
 if __name__ == "__main__":
     tf.logging.set_verbosity(tf.logging.INFO)
