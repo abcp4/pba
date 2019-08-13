@@ -6,7 +6,7 @@ python pba/search2.py \
     --model_name wrn_40_2 \
     --dataset test \
     --data_path /content/data/ \
-    --train_size 1000 --val_size 1322 \
+    --train_size 2000 --val_size 2322 \
     --checkpoint_freq 5 \
     --name "test_search" --gpu 0.15 --cpu 2 \
     --num_samples 16 --perturbation_interval 3 --epochs 200 \
