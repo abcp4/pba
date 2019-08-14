@@ -88,7 +88,7 @@ def main(_):
         },
         scheduler=pbt,
         reuse_actors=True,
-        resume = False,
+        resume = True,
         verbose=True)
     
 
