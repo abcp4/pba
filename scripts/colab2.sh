@@ -3,7 +3,7 @@ export PYTHONPATH="$(pwd)"
 
 python pba/search2.py \
     --local_dir "$PWD/results/" \
-    --model_name shake_shake_32 \
+    --model_name shake_shake_96 \
     --dataset test \
     --data_path /content/data/ \
     --train_size 2600 --val_size 2600 \
