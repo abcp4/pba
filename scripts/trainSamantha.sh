@@ -14,7 +14,7 @@ eval_cifar10() {
   python pba/train.py \
     --local_dir "$local_dir" --data_path "$data_path" \
     --model_name "$1" --dataset "$dataset" \
-    --train_size "$size" --val_size 0 \
+    --train_size "$size" --val_size 1322 \
     --checkpoint_freq 25 --gpu 1 --cpu 2 \
     --use_hp_policy --hp_policy "$hp_policy" \
     --hp_policy_epochs 200 \
