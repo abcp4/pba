@@ -24,6 +24,27 @@ import tensorflow as tf
 from autoaugment.helper_utils import setup_loss, decay_weights, cosine_lr  # pylint: disable=unused-import
 
 
+def detail_eval(preds,targets):
+    print(preds.shape)
+    print(targets.shape)
+    print('np.unique(targets):',np.unique(targets))
+    print('np.unique(preds): ',np.unique(preds))
+    from sklearn.metrics import classification_report
+    from sklearn.metrics import accuracy_score
+    print(accuracy_score(targets, preds))
+    cr = classification_report(targets, preds,output_dict= True)
+    a1,a2,a3 = cr['macro avg']['f1-score'] ,cr['macro avg']['precision'],cr['macro avg']['recall'] 
+    topover = (a1+a2+a3)/3 
+    print(classification_report(targets, preds))
+    from sklearn.metrics import balanced_accuracy_score
+    from sklearn.metrics import accuracy_score
+    print(balanced_accuracy_score(targets, preds))
+    print(accuracy_score(targets, preds))
+    from sklearn.metrics import confusion_matrix
+    matrix = confusion_matrix(targets, preds)
+    print(matrix.diagonal()/matrix.sum(axis=1))
+    print(matrix)
+
 def eval_child_model(session, model, data_loader, mode):
     """Evaluates `model` on held out data depending on `mode`.
 
@@ -54,6 +75,8 @@ def eval_child_model(session, model, data_loader, mode):
         eval_batches += 1
     correct = 0
     count = 0
+    data_pred = []
+    data_target = []
     for i in range(eval_batches):
         eval_images = images[i * model.batch_size:(i + 1) * model.batch_size]
         eval_labels = labels[i * model.batch_size:(i + 1) * model.batch_size]
@@ -66,8 +89,11 @@ def eval_child_model(session, model, data_loader, mode):
         correct += np.sum(
             np.equal(np.argmax(eval_labels, 1), np.argmax(preds, 1)))
         count += len(preds)
+        data_pred.append(preds)
+        data_target.append(eval_labels)
     assert count == len(images)
     tf.logging.info('correct: {}, total: {}'.format(correct, count))
+    detail_eval(data_pred,data_target)
     return correct / count
 
 
