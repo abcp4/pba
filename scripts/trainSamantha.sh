@@ -3,12 +3,12 @@ export PYTHONPATH="$(pwd)"
 
 # args: [model name] [lr] [wd]
 eval_cifar10() {
-  hp_policy="$PWD/schedules/rcifar10_16_wrn.txt"
+  hp_policy="/home/ivan/DeepAugmentColab/pbt_policy_4.txt"
   local_dir="$PWD/results/"
-  data_path="$PWD/datasets/cifar-10-batches-py"
+  data_path="~/geo/data/"
 
   size=50000
-  dataset="cifar10"
+  dataset= 'test'
   name="eval_cifar10_$1" # has 8 cutout size
 
   python pba/train.py \
