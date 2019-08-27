@@ -323,12 +323,15 @@ class ModelTrainer(object):
     def run_model(self, epoch):
         """Trains and evalutes the image model."""
         valid_accuracy = 0.
+        test_accuracy = 0.
         training_accuracy = self._run_training_loop(epoch)
         if self.hparams.validation_size > 0:
             valid_accuracy = self.eval_child_model(self.meval,
                                                    self.data_loader, 'val')
-        tf.logging.info('Train Acc: {}, Valid Acc: {}'.format(
-            training_accuracy, valid_accuracy))
+            test_accuracy = self.eval_child_model(self.meval, self.data_loader,
+                                                  'test')
+        tf.logging.info('Train Acc: {}, Valid Acc: {}, Test Acc: {}'.format(
+            training_accuracy, valid_accuracy,test_accuracy))
         return training_accuracy, valid_accuracy
 
     def reset_config(self, new_hparams):
