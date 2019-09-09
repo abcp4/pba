@@ -66,6 +66,7 @@ def eval_child_model(session, model, data_loader, mode):
     elif mode == 'test':
         images = data_loader.test_images
         labels = data_loader.test_labels
+        names = data_loader.names
     else:
         raise ValueError('Not valid eval mode')
     assert len(images) == len(labels)
@@ -94,6 +95,10 @@ def eval_child_model(session, model, data_loader, mode):
     assert count == len(images)
     tf.logging.info('correct: {}, total: {}'.format(correct, count))
     detail_eval(data_pred,data_target)
+    if mode == 'test':
+        print(data_pred)
+        print(data_target)
+        print(names)
     return correct / count
 
 
