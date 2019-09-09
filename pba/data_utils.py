@@ -303,7 +303,8 @@ class DataSet(object):
         import glob
         import cv2
 
-        def load(ttype,label,l,cv_img,labels,names):
+        def load(ttype,label,l,cv_img,labels):
+          names = []  
           for img in glob.glob(hparams.data_path+ttype+'/'+label+'/*.jpg'):
             n= cv2.imread(img)
             width = 64
@@ -334,15 +335,16 @@ class DataSet(object):
         x_test = []
         names = []
 
-        x_train,y_train,names = load('train','good',0,x_train,y_train,names)
-        x_train,y_train,names = load('train','bad',1,x_train,y_train,names)
-        x_train,y_train,names = load('train','ugly',2,x_train,y_train,names)
-        x_valid,y_valid,names = load('valid','good',0,x_valid,y_valid,names)
-        x_valid,y_valid,names = load('valid','bad',1,x_valid,y_valid,names)
-        x_valid,y_valid,names = load('valid','ugly',2,x_valid,y_valid,names)
-        x_test,y_test,names = load('test','good',0,x_test,y_test,names)
-        x_test,y_test,names = load('test','bad',1,x_test,y_test,names)
-        x_test,y_test,names = load('test','ugly',2,x_test,y_test,names)
+        x_train,y_train,_ = load('train','good',0,x_train,y_train)
+        x_train,y_train,_ = load('train','bad',1,x_train,y_train)
+        x_train,y_train,_ = load('train','ugly',2,x_train,y_train)
+        x_valid,y_valid,_ = load('valid','good',0,x_valid,y_valid)
+        x_valid,y_valid,_ = load('valid','bad',1,x_valid,y_valid)
+        x_valid,y_valid,_ = load('valid','ugly',2,x_valid,y_valid)
+        x_test,y_test,n1 = load('test','good',0,x_test,y_test)
+        x_test,y_test,n2 = load('test','bad',1,x_test,y_test)
+        x_test,y_test,n3 = load('test','ugly',2,x_test,y_test)
+        names = n1+n2+n3
 
         import numpy as np
         print('lol!!!')
