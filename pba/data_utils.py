@@ -303,7 +303,7 @@ class DataSet(object):
         import glob
         import cv2
 
-        def load(ttype,label,l,cv_img,labels):
+        def load(ttype,label,l,cv_img,labels,names):
           for img in glob.glob(hparams.data_path+ttype+'/'+label+'/*.jpg'):
             n= cv2.imread(img)
             width = 64
@@ -313,7 +313,8 @@ class DataSet(object):
             n = cv2.resize(n, dim, interpolation = cv2.INTER_AREA) 
             cv_img.append(n)
             labels.append(l)
-          return cv_img,labels
+            names.append(img)
+          return cv_img,labels,names
 
         def fix(data):
             data = np.asarray(data)
@@ -331,16 +332,17 @@ class DataSet(object):
         y_valid = []
         x_valid = []
         x_test = []
+        names = []
 
-        x_train,y_train = load('train','good',0,x_train,y_train)
-        x_train,y_train = load('train','bad',1,x_train,y_train)
-        x_train,y_train = load('train','ugly',2,x_train,y_train)
-        x_valid,y_valid = load('valid','good',0,x_valid,y_valid)
-        x_valid,y_valid = load('valid','bad',1,x_valid,y_valid)
-        x_valid,y_valid = load('valid','ugly',2,x_valid,y_valid)
-        x_test,y_test = load('test','good',0,x_test,y_test)
-        x_test,y_test = load('test','bad',1,x_test,y_test)
-        x_test,y_test = load('test','ugly',2,x_test,y_test)
+        x_train,y_train,names = load('train','good',0,x_train,y_train,names)
+        x_train,y_train,names = load('train','bad',1,x_train,y_train,names)
+        x_train,y_train,names = load('train','ugly',2,x_train,y_train,names)
+        x_valid,y_valid,names = load('valid','good',0,x_valid,y_valid,names)
+        x_valid,y_valid,names = load('valid','bad',1,x_valid,y_valid,names)
+        x_valid,y_valid,names = load('valid','ugly',2,x_valid,y_valid,names)
+        x_test,y_test,names = load('test','good',0,x_test,y_test,names)
+        x_test,y_test,names = load('test','bad',1,x_test,y_test,names)
+        x_test,y_test,names = load('test','ugly',2,x_test,y_test,names)
 
         import numpy as np
         print('lol!!!')
@@ -359,6 +361,7 @@ class DataSet(object):
         self.train_labels = y_train
         self.val_labels = y_valid
         self.test_labels = y_test
+        self.names = names
         print("data shape: ",self.train_images.shape)
         
     def load_data(self, hparams):
