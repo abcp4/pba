@@ -78,6 +78,7 @@ def eval_child_model(session, model, data_loader, mode):
     count = 0
     data_pred = []
     data_target = []
+    d = []
     for i in range(eval_batches):
         eval_images = images[i * model.batch_size:(i + 1) * model.batch_size]
         eval_labels = labels[i * model.batch_size:(i + 1) * model.batch_size]
@@ -90,9 +91,10 @@ def eval_child_model(session, model, data_loader, mode):
         correct += np.sum(
             np.equal(np.argmax(eval_labels, 1), np.argmax(preds, 1)))
         count += len(preds)
-        #data_pred.append(preds)
+        d.append(preds)
         #data_target.append(eval_labels)
         #get categoric prediction from logit
+        
         data_pred.append(np.argmax(preds))
         data_target.append(np.argmax(eval_labels))
     assert count == len(images)
@@ -101,6 +103,7 @@ def eval_child_model(session, model, data_loader, mode):
     data_target = np.asarray(data_target)
     detail_eval(data_pred,data_target)
     if mode == 'test':
+        print(d)
         print(data_pred)
         print(data_target)
         print(names)
