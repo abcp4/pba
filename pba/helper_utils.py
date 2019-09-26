@@ -27,7 +27,7 @@ from autoaugment.helper_utils import setup_loss, decay_weights, cosine_lr  # pyl
 def detail_eval(preds,targets):
     print('preds:',preds.shape)
     print('targets:',targets.shape)
-    print(preds)
+    print(targets)
     #print('np.unique(targets):',np.unique(targets))
     #print('np.unique(preds): ',np.unique(preds))
     from sklearn.metrics import classification_report
@@ -91,8 +91,10 @@ def eval_child_model(session, model, data_loader, mode):
         correct += np.sum(
             np.equal(np.argmax(eval_labels, 1), np.argmax(preds, 1)))
         count += len(preds)
-        data_pred.append(preds)
+        #data_pred.append(preds)
         data_target.append(eval_labels)
+        #get categoric prediction from logit
+        data_pred.append(np.argmax(preds))
     assert count == len(images)
     tf.logging.info('correct: {}, total: {}'.format(correct, count))
     data_pred = np.asarray(data_pred)
