@@ -60,8 +60,9 @@ def shuffle_data(data, labels):
     labels = labels[perm]
     return data, labels
 
-def load(ttype,label,l,cv_img,labels):
+def load(ttype,label,l,cv_img,labels,hparams):
     import glob
+    import cv2
     names = []  
     for img in glob.glob(hparams.data_path+ttype+'/'+label+'/*.jpg'):
         n= cv2.imread(img)
@@ -335,15 +336,15 @@ class DataSet(object):
         x_test = []
         names = []
 
-        x_train,y_train,_ = load('train','good',0,x_train,y_train)
-        x_train,y_train,_ = load('train','bad',1,x_train,y_train)
-        x_train,y_train,_ = load('train','ugly',2,x_train,y_train)
-        x_valid,y_valid,_ = load('valid','good',0,x_valid,y_valid)
-        x_valid,y_valid,_ = load('valid','bad',1,x_valid,y_valid)
-        x_valid,y_valid,_ = load('valid','ugly',2,x_valid,y_valid)
-        x_test,y_test,n1 = load('test','good',0,x_test,y_test)
-        x_test,y_test,n2 = load('test','bad',1,x_test,y_test)
-        x_test,y_test,n3 = load('test','ugly',2,x_test,y_test)
+        x_train,y_train,_ = load('train','good',0,x_train,y_train,hparams)
+        x_train,y_train,_ = load('train','bad',1,x_train,y_train,hparams)
+        x_train,y_train,_ = load('train','ugly',2,x_train,y_train,hparams)
+        x_valid,y_valid,_ = load('valid','good',0,x_valid,y_valid,hparams)
+        x_valid,y_valid,_ = load('valid','bad',1,x_valid,y_valid,hparams)
+        x_valid,y_valid,_ = load('valid','ugly',2,x_valid,y_valid,hparams)
+        x_test,y_test,n1 = load('test','good',0,x_test,y_test,hparams)
+        x_test,y_test,n2 = load('test','bad',1,x_test,y_test,hparams)
+        x_test,y_test,n3 = load('test','ugly',2,x_test,y_test,hparams)
         names = n1+n2+n3
 
         import numpy as np
@@ -390,9 +391,9 @@ class DataSet(object):
         x_test = []
         names = []
         for i in range(7):
-            x_train,y_train,_ = load('train',str(i),i,x_train,y_train)
-            x_valid,y_valid,_ = load('valid',str(i),i,x_valid,y_valid)
-            x_test,y_test,n1 = load('test',str(i),i,x_test,y_test)
+            x_train,y_train,_ = load('train',str(i),i,x_train,y_train,hparams)
+            x_valid,y_valid,_ = load('valid',str(i),i,x_valid,y_valid,hparams)
+            x_test,y_test,n1 = load('test',str(i),i,x_test,y_test,hparams)
         names = n1+n2+n3
 
         import numpy as np
