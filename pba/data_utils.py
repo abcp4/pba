@@ -393,8 +393,8 @@ class DataSet(object):
         for i in range(7):
             x_train,y_train,_ = load('train',str(i),i,x_train,y_train,hparams)
             x_valid,y_valid,_ = load('valid',str(i),i,x_valid,y_valid,hparams)
-            x_test,y_test,n1 = load('test',str(i),i,x_test,y_test,hparams)
-        names = n1+n2+n3
+            x_test,y_test,n = load('test',str(i),i,x_test,y_test,hparams)
+            names+=n
 
         import numpy as np
         print('lol!!!')
