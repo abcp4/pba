@@ -61,6 +61,7 @@ def shuffle_data(data, labels):
     return data, labels
 
 def load(ttype,label,l,cv_img,labels):
+    import glob
     names = []  
     for img in glob.glob(hparams.data_path+ttype+'/'+label+'/*.jpg'):
         n= cv2.imread(img)
