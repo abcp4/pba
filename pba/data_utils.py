@@ -378,7 +378,7 @@ class DataSet(object):
             print('shape:',data.shape)
             import torch
             data = torch.from_numpy(data)
-            data = data.permute(0, 3, 1, 2)
+            #data = data.permute(0, 3, 1, 2)
             return data
         
         cv_img = []
