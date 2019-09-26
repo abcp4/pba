@@ -85,6 +85,7 @@ class DataSet(object):
 
     def __init__(self, hparams):
         self.hparams = hparams
+        self.proportion = hparams.proportion
         self.epochs = 0
         self.curr_train_index = 0
 
@@ -394,8 +395,14 @@ class DataSet(object):
         x_valid = []
         x_test = []
         names = []
+        x = []
+        y = []
         for i in range(7):
-            x_train,y_train,_ = load('train',str(i),i,x_train,y_train,hparams,img_type='png',grayscale = True)
+            x,y,_ = load('train',str(i),i,x,y,hparams,img_type='png',grayscale = True)
+            x_train +=x[:int(len(x)*self.proportion) ]
+            y_train+=y[:int(len(y)*self.proportion) ]
+            x = []
+            y = []
             x_valid,y_valid,_ = load('valid',str(i),i,x_valid,y_valid,hparams,img_type='png',grayscale = True)
             x_test,y_test,n = load('test',str(i),i,x_test,y_test,hparams,img_type='png',grayscale = True)
             names+=n
