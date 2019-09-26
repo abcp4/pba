@@ -131,10 +131,11 @@ def create_hparams(state, FLAGS):  # pylint: disable=invalid-name
         lr=FLAGS.lr,
         weight_decay_rate=FLAGS.wd,
         test_batch_size=FLAGS.test_bs)
-
+    
+    hparams.add_hparam('proportion', FLAGS.proportion)
     if state == 'train':
         hparams.add_hparam('no_aug', FLAGS.no_aug)
-        hparams.add_hparam('proportion', FLAGS.proportion)
+        
         hparams.add_hparam('use_hp_policy', FLAGS.use_hp_policy)
         if FLAGS.use_hp_policy:
             if FLAGS.hp_policy == 'random':
