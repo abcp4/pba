@@ -60,6 +60,19 @@ def shuffle_data(data, labels):
     labels = labels[perm]
     return data, labels
 
+def load(ttype,label,l,cv_img,labels):
+    names = []  
+    for img in glob.glob(hparams.data_path+ttype+'/'+label+'/*.jpg'):
+        n= cv2.imread(img)
+        width = 64
+        height = 64
+        dim = (width, height)
+        # resize image
+        n = cv2.resize(n, dim, interpolation = cv2.INTER_AREA) 
+        cv_img.append(n)
+        labels.append(l)
+        names.append(img)
+     return cv_img,labels,names
 
 class DataSet(object):
     """Dataset object that produces augmented training and eval data."""
@@ -303,20 +316,6 @@ class DataSet(object):
         import glob
         import cv2
 
-        def load(ttype,label,l,cv_img,labels):
-          names = []  
-          for img in glob.glob(hparams.data_path+ttype+'/'+label+'/*.jpg'):
-            n= cv2.imread(img)
-            width = 64
-            height = 64
-            dim = (width, height)
-            # resize image
-            n = cv2.resize(n, dim, interpolation = cv2.INTER_AREA) 
-            cv_img.append(n)
-            labels.append(l)
-            names.append(img)
-          return cv_img,labels,names
-
         def fix(data):
             data = np.asarray(data)
             print('shape:',data.shape)
@@ -344,6 +343,55 @@ class DataSet(object):
         x_test,y_test,n1 = load('test','good',0,x_test,y_test)
         x_test,y_test,n2 = load('test','bad',1,x_test,y_test)
         x_test,y_test,n3 = load('test','ugly',2,x_test,y_test)
+        names = n1+n2+n3
+
+        import numpy as np
+        print('lol!!!')
+        x_test = fix(x_test)
+        y_test = np.asarray(y_test)
+        x_train = fix(x_train)
+        y_train = np.asarray(y_train)
+        x_valid = fix(x_valid)
+        y_valid = np.asarray(y_valid)
+        
+
+        self.train_images = x_train.data.numpy()
+        self.val_images = x_valid.data.numpy()
+        self.test_images = x_test.data.numpy()
+        self.train_labels = y_train
+        self.val_labels = y_valid
+        self.test_labels = y_test
+        self.names = names
+        print("data shape: ",self.train_images.shape)
+        
+    def load_hexp(self, hparams):
+        """Load random data and labels."""
+    
+        self.num_classes = 7
+        import glob
+        import cv2
+
+        def fix(data):
+            data = np.asarray(data)
+            print('shape:',data.shape)
+            import torch
+            data = torch.from_numpy(data)
+            data = data.permute(0, 3, 1, 2)
+            return data
+        
+        cv_img = []
+        labels = []
+        y_test = []
+        y_train = []
+        x_train = []
+        y_valid = []
+        x_valid = []
+        x_test = []
+        names = []
+        for i in range(7):
+            x_train,y_train,_ = load('train',str(i),i,x_train,y_train)
+            x_valid,y_valid,_ = load('valid',str(i),i,x_valid,y_valid)
+            x_test,y_test,n1 = load('test',str(i),i,x_test,y_test)
         names = n1+n2+n3
 
         import numpy as np
@@ -391,6 +439,8 @@ class DataSet(object):
             self.load_svhn(hparams)
         elif hparams.dataset == 'test':
             self.load_test(hparams)
+        elif hparams.dataset == 'hexp':
+            self.load_hexp(hparams)
         else:
             raise ValueError('unimplemented')
 
