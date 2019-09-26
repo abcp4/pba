@@ -94,6 +94,8 @@ def eval_child_model(session, model, data_loader, mode):
         data_target.append(eval_labels)
     assert count == len(images)
     tf.logging.info('correct: {}, total: {}'.format(correct, count))
+    data_pred = np.asarray(data_pred)
+    data_target = np.asarray(data_target)
     detail_eval(data_pred,data_target)
     if mode == 'test':
         print(data_pred)
