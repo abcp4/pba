@@ -103,7 +103,6 @@ def eval_child_model(session, model, data_loader, mode):
     data_target = np.asarray(data_target)
     detail_eval(data_pred,data_target)
     if mode == 'test':
-        print(d)
         print(data_pred)
         print(data_target)
         print(names)
