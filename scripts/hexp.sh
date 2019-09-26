@@ -1,7 +1,7 @@
 #!/bin/bash
 export PYTHONPATH="$(pwd)"
 
-python pba/search2.py \
+python pba/search.py \
     --local_dir "$PWD/results/" \
     --model_name wrn_40_2 \
     --dataset hexp \
