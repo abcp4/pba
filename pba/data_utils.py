@@ -60,22 +60,19 @@ def shuffle_data(data, labels):
     labels = labels[perm]
     return data, labels
 
-def load(ttype,label,l,cv_img,labels,hparams,grayscale = False):
+def load(ttype,label,l,cv_img,labels,hparams,img_type = 'jpg',grayscale = False):
     import glob
     import cv2
     names = []  
-    for img in glob.glob(hparams.data_path+ttype+'/'+label+'/*.jpg'):
+    for img in glob.glob(hparams.data_path+ttype+'/'+label+'/*.'+img_type):
         n= cv2.imread(img)
         width = 64
         height = 64
         dim = (width, height)
         # resize image
         n = cv2.resize(n, dim, interpolation = cv2.INTER_AREA) 
-        #if(grayscale):
-        print(n.shape)  # (64, 224, 224)
-        n = np.repeat(n[..., np.newaxis], 3, -1)
-        print(n.shape)  # (64, 224, 224, 3)
-        a=2/0
+        if(grayscale):
+            n = np.repeat(n[..., np.newaxis], 3, -1)
         cv_img.append(n)
         labels.append(l)
         names.append(img)
@@ -396,9 +393,9 @@ class DataSet(object):
         x_test = []
         names = []
         for i in range(7):
-            x_train,y_train,_ = load('train',str(i),i,x_train,y_train,hparams,grayscale = True)
-            x_valid,y_valid,_ = load('valid',str(i),i,x_valid,y_valid,hparams,grayscale = True)
-            x_test,y_test,n = load('test',str(i),i,x_test,y_test,hparams,grayscale = True)
+            x_train,y_train,_ = load('train',str(i),i,x_train,y_train,hparams,img_type='png',grayscale = True)
+            x_valid,y_valid,_ = load('valid',str(i),i,x_valid,y_valid,hparams,img_type='png',grayscale = True)
+            x_test,y_test,n = load('test',str(i),i,x_test,y_test,hparams,img_type='png',grayscale = True)
             names+=n
 
         import numpy as np
