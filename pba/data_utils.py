@@ -71,10 +71,11 @@ def load(ttype,label,l,cv_img,labels,hparams,grayscale = False):
         dim = (width, height)
         # resize image
         n = cv2.resize(n, dim, interpolation = cv2.INTER_AREA) 
-        if(grayscale):
-            print(n.shape)  # (64, 224, 224)
-            n = np.repeat(n[..., np.newaxis], 3, -1)
-            print(n.shape)  # (64, 224, 224, 3)
+        #if(grayscale):
+        print(n.shape)  # (64, 224, 224)
+        n = np.repeat(n[..., np.newaxis], 3, -1)
+        print(n.shape)  # (64, 224, 224, 3)
+        a=2/0
         cv_img.append(n)
         labels.append(l)
         names.append(img)
