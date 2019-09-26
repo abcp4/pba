@@ -72,7 +72,7 @@ def load(ttype,label,l,cv_img,labels):
         cv_img.append(n)
         labels.append(l)
         names.append(img)
-     return cv_img,labels,names
+    return cv_img,labels,names
 
 class DataSet(object):
     """Dataset object that produces augmented training and eval data."""
