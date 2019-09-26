@@ -25,8 +25,9 @@ from autoaugment.helper_utils import setup_loss, decay_weights, cosine_lr  # pyl
 
 
 def detail_eval(preds,targets):
-    print(preds.shape)
-    print(targets.shape)
+    print('preds:',preds.shape)
+    print('targets:',targets.shape)
+    print(preds)
     #print('np.unique(targets):',np.unique(targets))
     #print('np.unique(preds): ',np.unique(preds))
     from sklearn.metrics import classification_report
