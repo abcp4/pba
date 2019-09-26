@@ -35,6 +35,7 @@ def create_parser(state):
     parser.add_argument('--restore', type=str, default=None, help='If specified, tries to restore from given path.')
     parser.add_argument('--train_size', type=int, default=5000, help='Number of training examples.')
     parser.add_argument('--val_size', type=int, default=45000, help='Number of validation examples.')
+    parser.add_argument('--proportion', type=float, default=1.0, help='Proportion of train dataset to use')
     parser.add_argument('--checkpoint_freq', type=int, default=50, help='Checkpoint frequency.')
     parser.add_argument(
         '--cpu', type=float, default=4, help='Allocated by Ray')
