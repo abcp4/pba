@@ -408,10 +408,6 @@ class DataSet(object):
         y_train = np.asarray(y_train)
         x_valid = fix(x_valid)
         y_valid = np.asarray(y_valid)
-        
-        x_train=x_train[:5000]
-        y_train=y_train[:5000]
-        
 
         
         self.train_images = x_train.data.numpy()
