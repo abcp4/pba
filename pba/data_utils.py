@@ -74,12 +74,10 @@ def load(ttype,label,l,cv_img,labels,hparams,img_type = 'jpg',grayscale = False)
         if(grayscale):
             if(len(n.shape)<3):
                 n = np.repeat(n[..., np.newaxis], 3, -1)
-                print(n.shape)
-                a=2/0
+                
         cv_img.append(n)
         labels.append(l)
         names.append(img)
-        break
     return cv_img,labels,names
 
 class DataSet(object):
@@ -410,6 +408,9 @@ class DataSet(object):
         y_train = np.asarray(y_train)
         x_valid = fix(x_valid)
         y_valid = np.asarray(y_valid)
+        
+        x_train=x_train[:5000]
+        y_train=y_train[:5000]
         
 
         
