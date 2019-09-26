@@ -91,12 +91,12 @@ def eval_child_model(session, model, data_loader, mode):
         correct += np.sum(
             np.equal(np.argmax(eval_labels, 1), np.argmax(preds, 1)))
         count += len(preds)
-        d.append(preds)
         #data_target.append(eval_labels)
         #get categoric prediction from logit
-        
-        data_pred.append(np.argmax(preds))
-        data_target.append(np.argmax(eval_labels))
+        for p in preds:
+            data_pred.append(np.argmax(p))
+        fro l in eval_labels:
+            data_target.append(np.argmax(l))
     assert count == len(images)
     tf.logging.info('correct: {}, total: {}'.format(correct, count))
     data_pred = np.asarray(data_pred)
