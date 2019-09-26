@@ -7,6 +7,7 @@ python pba/search.py \
     --dataset hexp \
     --data_path /content/data/ \
     --train_size 2600 --val_size 2600 \
+    --proportion 0.5 \
     --checkpoint_freq 1 \
     --name "test_search" --gpu 0.15 --cpu 2 \
     --num_samples 16 --perturbation_interval 3 --epochs 1800 \
