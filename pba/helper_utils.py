@@ -42,8 +42,8 @@ def detail_eval(preds,targets):
     print(accuracy_score(targets, preds))
     from sklearn.metrics import confusion_matrix
     matrix = confusion_matrix(targets, preds)
-    print(matrix.diagonal()/matrix.sum(axis=1))
-    print(matrix)
+    #print(matrix.diagonal()/matrix.sum(axis=1))
+    #print(matrix)
 
 def eval_child_model(session, model, data_loader, mode):
     """Evaluates `model` on held out data depending on `mode`.
@@ -102,10 +102,10 @@ def eval_child_model(session, model, data_loader, mode):
     data_pred = np.asarray(data_pred)
     data_target = np.asarray(data_target)
     detail_eval(data_pred,data_target)
-    if mode == 'test':
-        print(data_pred)
-        print(data_target)
-        print(names)
+    #if mode == 'test':
+    #    print(data_pred)
+    #    print(data_target)
+    #    print(names)
     return correct / count
 
 
