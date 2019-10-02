@@ -486,6 +486,8 @@ class DataSet(object):
 
         dset = self.hparams.dataset + '_' + str(self.hparams.train_size)
         images, labels = batched_data
+        print(labels)
+        a=2/0
         for data in images:
             if not self.hparams.no_aug:
                 if not self.hparams.use_hp_policy:
