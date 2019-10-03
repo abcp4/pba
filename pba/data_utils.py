@@ -60,14 +60,14 @@ def shuffle_data(data, labels):
     labels = labels[perm]
     return data, labels
 
-def load(ttype,label,l,cv_img,labels,hparams,img_type = 'jpg',grayscale = False):
+def load(ttype,label,l,cv_img,labels,hparams,img_type = 'png',grayscale = False):
     import glob
     import cv2
     names = []  
     for img in glob.glob(hparams.data_path+ttype+'/'+label+'/*.'+img_type):
         n= cv2.imread(img)
-        width = 64
-        height = 64
+        width = 128
+        height = 128
         dim = (width, height)
         # resize image
         n = cv2.resize(n, dim, interpolation = cv2.INTER_AREA) 
