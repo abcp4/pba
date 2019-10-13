@@ -66,8 +66,8 @@ def load(ttype,label,l,cv_img,labels,hparams,img_type = 'png',grayscale = False)
     names = []  
     for img in glob.glob(hparams.data_path+ttype+'/'+label+'/*.'+img_type):
         n= cv2.imread(img)
-        width = 128
-        height = 128
+        width = 64
+        height = 64
         dim = (width, height)
         # resize image
         n = cv2.resize(n, dim, interpolation = cv2.INTER_AREA) 
@@ -374,7 +374,7 @@ class DataSet(object):
     def load_hexp(self, hparams):
         """Load random data and labels."""
     
-        self.num_classes = 7
+        self.num_classes = 3
         import glob
         import cv2
 
@@ -403,8 +403,8 @@ class DataSet(object):
             y_train+=y[:int(len(y)*self.proportion) ]
             x = []
             y = []
-            x_valid,y_valid,_ = load('valid',str(i),i,x_valid,y_valid,hparams,img_type='png',grayscale = True)
-            x_test,y_test,n = load('test',str(i),i,x_test,y_test,hparams,img_type='png',grayscale = True)
+            x_valid,y_valid,_ = load('valid',str(i),i,x_valid,y_valid,hparams,img_type='png',grayscale = False)
+            x_test,y_test,n = load('test',str(i),i,x_test,y_test,hparams,img_type='png',grayscale = False)
             names+=n
 
         import numpy as np
