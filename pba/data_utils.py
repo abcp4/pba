@@ -399,7 +399,7 @@ class DataSet(object):
         y = []
         names = ['a','h','s']
         for i in range(3):
-            x,y,_ = load('train',str(i),i,x,y,hparams,img_type='png',grayscale = True)
+            x,y,_ = load('train',names[i],i,x,y,hparams,img_type='png',grayscale = True)
             x_train +=x[:int(len(x)*self.proportion) ]
             y_train+=y[:int(len(y)*self.proportion) ]
             x = []
