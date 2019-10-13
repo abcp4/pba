@@ -404,7 +404,7 @@ class DataSet(object):
             y_train+=y[:int(len(y)*self.proportion) ]
             x = []
             y = []
-            x_valid,y_valid,_ = load('valid',names[i],i,x_valid,y_valid,hparams,img_type='png',grayscale = False)
+            x_valid,y_valid,_ = load('val',names[i],i,x_valid,y_valid,hparams,img_type='png',grayscale = False)
             x_test,y_test,n = load('test',names[i],i,x_test,y_test,hparams,img_type='png',grayscale = False)
             names+=n
 
