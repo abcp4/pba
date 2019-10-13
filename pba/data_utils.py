@@ -397,14 +397,15 @@ class DataSet(object):
         names = []
         x = []
         y = []
+        names = ['a','h','s']
         for i in range(3):
             x,y,_ = load('train',str(i),i,x,y,hparams,img_type='png',grayscale = True)
             x_train +=x[:int(len(x)*self.proportion) ]
             y_train+=y[:int(len(y)*self.proportion) ]
             x = []
             y = []
-            x_valid,y_valid,_ = load('valid',str(i),i,x_valid,y_valid,hparams,img_type='png',grayscale = False)
-            x_test,y_test,n = load('test',str(i),i,x_test,y_test,hparams,img_type='png',grayscale = False)
+            x_valid,y_valid,_ = load('valid',names[i],i,x_valid,y_valid,hparams,img_type='png',grayscale = False)
+            x_test,y_test,n = load('test',names[i],i,x_test,y_test,hparams,img_type='png',grayscale = False)
             names+=n
 
         import numpy as np
