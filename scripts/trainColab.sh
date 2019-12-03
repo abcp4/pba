@@ -11,3 +11,4 @@ python pba/train.py \
     --aug_policy cifar10 --name "test_search" \
     --lr 0.1 --wd 0.0005 \
     --recompute_dset_stats
+    
