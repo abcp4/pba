@@ -69,7 +69,7 @@ def eval_child_model(session, model, data_loader, mode):
     if mode == 'val':
         images = data_loader.val_images
         labels = data_loader.val_labels
-	names = []
+        names = []
     elif mode == 'test':
         images = data_loader.test_images
         labels = data_loader.test_labels
