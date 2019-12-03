@@ -128,6 +128,12 @@ def eval_child_model(session, model, data_loader, mode):
         statsDict = pickle.load(open('statsDict.p','rb'))
     except IOError:
         statsDict = {}
+        statsDict['type'] = []
+        statsDict['logits'] = []
+        statsDict['names'] = []
+        statsDict['acc'] = []
+        statsDict['report'] = []
+        
     statsDict['type'].append(mode)
     statsDict['logits'].append(logits)
     statsDict['names'].append(names)
