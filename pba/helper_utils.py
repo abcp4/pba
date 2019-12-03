@@ -23,6 +23,12 @@ import tensorflow as tf
 
 from autoaugment.helper_utils import setup_loss, decay_weights, cosine_lr  # pylint: disable=unused-import
 
+from sklearn.metrics import accuracy_score
+
+from sklearn.metrics import balanced_accuracy_score
+
+from sklearn.metrics import classification_report
+
 
 def detail_eval(preds,targets):
     print('preds:',preds.shape)
@@ -38,8 +44,6 @@ def detail_eval(preds,targets):
     print(classification_report(targets, preds))
     from sklearn.metrics import balanced_accuracy_score
     from sklearn.metrics import accuracy_score
-    print(balanced_accuracy_score(targets, preds))
-    print(accuracy_score(targets, preds))
     from sklearn.metrics import confusion_matrix
     matrix = confusion_matrix(targets, preds)
     #print(matrix.diagonal()/matrix.sum(axis=1))
@@ -60,9 +64,12 @@ def eval_child_model(session, model, data_loader, mode):
   Raises:
     ValueError: if invalid dataset `mode` is specified.
   """
+    print('#####################MODE#####################')
+    print(mode)
     if mode == 'val':
         images = data_loader.val_images
         labels = data_loader.val_labels
+	names = []
     elif mode == 'test':
         images = data_loader.test_images
         labels = data_loader.test_labels
@@ -77,6 +84,7 @@ def eval_child_model(session, model, data_loader, mode):
     correct = 0
     count = 0
     data_pred = []
+    logits = []
     data_target = []
     d = []
     for i in range(eval_batches):
@@ -95,6 +103,8 @@ def eval_child_model(session, model, data_loader, mode):
         #get categoric prediction from logit
         for p in preds:
             data_pred.append(np.argmax(p))
+            if(mode == 'test'):
+                logits.append(p)
         for l in eval_labels:
             data_target.append(np.argmax(l))
     assert count == len(images)
@@ -103,9 +113,29 @@ def eval_child_model(session, model, data_loader, mode):
     data_target = np.asarray(data_target)
     detail_eval(data_pred,data_target)
     #if mode == 'test':
-    #    print(data_pred)
-    #    print(data_target)
-    #    print(names)
+    acc = accuracy_score(data_target, data_pred)
+    cr=classification_report(data_target, data_pred,output_dict= True)
+    print("SAVING SCORE")
+    log_score = open("/home/ivan/geo/pba/log_score.txt","a")
+    log_score.write('logits: '+str(logits) + "\n")
+    log_score.write('names: '+str(names) + "\n")
+    log_score.write('balanced accuracy: '+str(balanced_accuracy_score(data_target, data_pred))+'\n')
+    log_score.write('accuracy:'+str(acc)+'\n')
+    log_score.write('report: '+str(cr)+'\n')
+    log_score.close()
+    import pickle
+    try:
+        statsDict = pickle.load(open('statsDict.p','rb'))
+    except IOError:
+        statsDict = {}
+    statsDict['type'].append(mode)
+    statsDict['logits'].append(logits)
+    statsDict['names'].append(names)
+    statsDict['acc'].append(acc)
+    statsDict['report'].append(str(cr))
+    pickle.dump(statsDict,open('statsDict.p','wb'))
+    print("SAVED!!")
+
     return correct / count
 
 
@@ -189,3 +219,4 @@ def run_epoch_training(session, model, data_loader, curr_epoch):
 
     tf.logging.info('Train accuracy: {}'.format(train_accuracy))
     return train_accuracy
+
