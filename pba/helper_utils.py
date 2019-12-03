@@ -116,7 +116,7 @@ def eval_child_model(session, model, data_loader, mode):
     acc = accuracy_score(data_target, data_pred)
     cr=classification_report(data_target, data_pred,output_dict= True)
     print("SAVING SCORE")
-    log_score = open("/home/ivan/geo/pba/log_score.txt","a")
+    log_score = open("log_score.txt","a")
     log_score.write('logits: '+str(logits) + "\n")
     log_score.write('names: '+str(names) + "\n")
     log_score.write('balanced accuracy: '+str(balanced_accuracy_score(data_target, data_pred))+'\n')
