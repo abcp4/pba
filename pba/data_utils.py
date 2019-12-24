@@ -340,17 +340,16 @@ class DataSet(object):
         x_valid = []
         x_test = []
         names = []
-
-        x_train,y_train,_ = load('train','good',0,x_train,y_train,hparams)
-        x_train,y_train,_ = load('train','bad',1,x_train,y_train,hparams)
-        x_train,y_train,_ = load('train','ugly',2,x_train,y_train,hparams)
-        x_valid,y_valid,_ = load('val','good',0,x_valid,y_valid,hparams)
-        x_valid,y_valid,_ = load('val','bad',1,x_valid,y_valid,hparams)
-        x_valid,y_valid,_ = load('val','ugly',2,x_valid,y_valid,hparams)
-        x_test,y_test,n1 = load('test','good',0,x_test,y_test,hparams)
-        x_test,y_test,n2 = load('test','bad',1,x_test,y_test,hparams)
-        x_test,y_test,n3 = load('test','ugly',2,x_test,y_test,hparams)
-        names = n1+n2+n3
+        
+        classes = os.listdir('/content/data/train/')
+        print("Classes:",classes)
+        nc = 0
+        for c in classes:
+            x_train,y_train,_ = load('train',c,nc,x_train,y_train,hparams)
+            x_valid,y_valid,_ = load('val',c,nc,x_valid,y_valid,hparams)
+            x_test,y_test,n1 = load('test',c,nc,x_test,y_test,hparams)
+            nc+=1
+            names = names+n1
 
         import numpy as np
         print('lol!!!')
